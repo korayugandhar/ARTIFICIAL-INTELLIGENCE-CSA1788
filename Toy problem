@@ -1,0 +1,14 @@
+# Problem: Given a list of integers, find the largest sum of any of its sublists.
+
+def max_sublist_sum(lst):
+    max_sum = 0
+    for i in range(len(lst)):
+        for j in range(i, len(lst)):
+            sublist = lst[i:j+1]
+            current_sum = sum(sublist)
+            if current_sum > max_sum:
+                max_sum = current_sum
+    return max_sum
+
+# Test the function
+print(max_sublist_sum([-2, 1, -3, 4, -1, 2, 1, -5, 4])) # Output: 6 (the sublist [4,-1,2,1])

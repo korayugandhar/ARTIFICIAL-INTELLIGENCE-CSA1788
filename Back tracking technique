@@ -1,0 +1,12 @@
+def backtrack(items, n, combination, index):
+    if index == n:
+        print(combination)
+        return
+    for i in range(len(items)):
+        combination[index] = items[i]
+        backtrack(items, n, combination, index+1)
+
+items = [1, 2, 3]
+n = len(items)
+combination = [0] * n
+backtrack(items, n, combination, 0)

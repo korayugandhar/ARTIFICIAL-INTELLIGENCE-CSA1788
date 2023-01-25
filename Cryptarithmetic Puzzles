@@ -1,0 +1,29 @@
+from sympy.solvers import solve
+from sympy import Symbol
+
+# Create a function to solve the puzzle
+def cryptarithmetic_puzzle(puzzle):
+    # Get the unique letters in the puzzle
+    letters = set(puzzle)
+    # Remove the "+" and "=" characters
+    letters.discard("+")
+    letters.discard("=")
+    # Create symbols for each letter
+    symbols = {letter: Symbol(letter) for letter in letters}
+    # Split the puzzle into the left-hand side and the right-hand side
+    lhs, rhs = puzzle.replace(" ", "").split("=")
+    # Convert the strings to equations
+    lhs = sum(symbols[char] * (10 ** (len(lhs) - i - 1)) for i, char in enumerate(lhs[::-1]))
+    rhs = sum(symbols[char] * (10 ** (len(rhs) - i - 1)) for i, char in enumerate(rhs[::-1]))
+    # Find a solution
+    solution = solve(lhs - rhs)
+    # Print the solution
+    if solution:
+        print("Solution:")
+        for letter, value in solution.items():
+            print(f"{letter}: {value}")
+    else:
+        print("No solution found.")
+
+# Test the function with a sample puzzle
+cryptarithmetic_puzzle("SEND + MORE = MONEY")

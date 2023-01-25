@@ -1,0 +1,22 @@
+import itertools
+
+def tsp(cities):
+    # Get all possible permutations of cities
+    all_permutations = itertools.permutations(cities)
+    # Initialize the shortest distance to a very large number
+    shortest_distance = float('inf')
+    # Iterate through all permutations
+    for perm in all_permutations:
+        # Get the distance for this permutation
+        distance = 0
+        for i in range(len(perm) - 1):
+            distance += dist(perm[i], perm[i + 1])
+        # Check if this distance is shorter than the current shortest distance
+        if distance < shortest_distance:
+            shortest_distance = distance
+            shortest_path = perm
+    return shortest_distance, shortest_path
+
+# Example usage
+cities = [("New York", (40.71, 74.00)), ("Los Angeles", (34.05, 118.24)), ("Chicago", (41.88, 87.63))]
+print(tsp(cities))

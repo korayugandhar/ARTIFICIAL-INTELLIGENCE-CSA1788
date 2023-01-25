@@ -1,0 +1,29 @@
+def knapsack(items, maxWeight):
+    n = len(items)
+    # Create a 2D array to store the maximum value that can be obtained for each weight
+    dp = [[0 for _ in range(maxWeight + 1)] for _ in range(n + 1)]
+    
+    for i in range(1, n+1):
+        for j in range(1, maxWeight + 1):
+            item = items[i-1]
+            if j < item[1]:
+                dp[i][j] = dp[i-1][j]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j-item[1]] + item[0])
+    
+    # Find the items that were included in the knapsack
+    included = []
+    i = n
+    j = maxWeight
+    while i > 0 and j > 0:
+        if dp[i][j] != dp[i-1][j]:
+            included.append(i-1)
+            j -= items[i-1][1]
+        i -= 1
+    included.reverse()
+    return dp[n][maxWeight], included
+
+# Test the function with an example
+items = [(60, 10), (100, 20), (120, 30)]
+maxWeight = 50
+print(knapsack(items, maxWeight))

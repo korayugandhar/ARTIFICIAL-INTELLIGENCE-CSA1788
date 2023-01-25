@@ -1,0 +1,14 @@
+def DLS(node, goal, limit):
+    if node == goal:
+        return True
+    elif limit == 0:
+        return False
+    else:
+        cutoff_occurred = False
+        for child in node.children:
+            found = DLS(child, goal, limit-1)
+            if not found:
+                cutoff_occurred = True
+            else:
+                return True
+        return cutoff_occurred

@@ -1,0 +1,33 @@
+class Minimax:
+    def _init_(self, depth, player):
+        self.depth = depth
+        self.player = player
+
+    def minimax(self, state, depth, player):
+        if depth == 0 or state.is_game_over():
+            return state.evaluate()
+        if player == self.player:
+            best_value = -float('inf')
+            for move in state.get_possible_moves():
+                new_state = state.make_move(move)
+                value = self.minimax(new_state, depth - 1, -player)
+                best_value = max(best_value, value)
+            return best_value
+        else:
+            best_value = float('inf')
+            for move in state.get_possible_moves():
+                new_state = state.make_move(move)
+                value = self.minimax(new_state, depth - 1, -player)
+                best_value = min(best_value, value)
+            return best_value
+
+    def get_best_move(self, state):
+        best_value = -float('inf')
+        best_move = None
+        for move in state.get_possible_moves():
+            new_state = state.make_move(move)
+            value = self.minimax(new_state, self.depth - 1, -self.player)
+            if value > best_value:
+                best_value = value
+                best_move = move
+        return best_move
